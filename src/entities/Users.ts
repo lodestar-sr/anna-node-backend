@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm';
 import { IsNumber, IsString, IsEmail } from 'class-validator';
 
 import { UserRole } from '../shared/constants/global.constants';
@@ -23,4 +30,10 @@ export class Users extends BaseEntity {
     default: UserRole.STANDARD,
   })
   role: UserRole;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

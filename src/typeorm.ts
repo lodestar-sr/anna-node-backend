@@ -2,17 +2,18 @@ import { Connection, createConnection, DefaultNamingStrategy, useContainer } fro
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import { Container } from 'typedi';
+import { config } from 'dotenv';
 
 let connection: Connection;
 
+config();
 async function connect(): Promise<Connection> {
-
   const options: MysqlConnectionOptions = {
     type: 'mysql',
     host: process.env.DATABASE_HOST,
     port: parseInt(process.env.DATABASE_PORT),
     username: process.env.DATABASE_USER,
-    database: process.env.DATABASE_NAME,
+    database: process.env.NODE_ENV === 'test' ? process.env.DATABASE_TEST_NAME : process.env.DATABASE_NAME,
     password: process.env.DATABASE_PASSWORD,
     synchronize: false,
     entities: [

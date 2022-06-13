@@ -62,7 +62,7 @@ export class AuthController {
     }
   };
 
-  public fetchMe = async (req: IRequest, res: Response, next: NextFunction) => {
+  public fetchMe = async (req: IRequest, res: Response) => {
     const me = await this.userService.findByEmail(req.user.email);
 
     if (me) {
@@ -78,7 +78,7 @@ export class AuthController {
     }
   };
 
-  public login = async (req: IRequest, res: Response, next: NextFunction) => {
+  public login = async (req: IRequest, res: Response) => {
     const { email, password } = req.body;
     const user = await this.userService.findByEmail(email);
 
@@ -91,7 +91,7 @@ export class AuthController {
       if (this.comparePasswords(user.password, password)) {
         const tokens = await this.generateToken({ id: user.id, email: user.email, role: user.role });
 
-        res.status(201).send(tokens);
+        res.status(200).send(tokens);
       } else {
         return res.status(400).send({
           status: ResponseStatus.INVALID_EMAIL_PASSWORD,
@@ -101,7 +101,7 @@ export class AuthController {
     }
   };
 
-  public register = async (req: IRequest, res: Response, next: NextFunction) => {
+  public register = async (req: IRequest, res: Response) => {
     try {
       const { email, password } = req.body;
 
@@ -131,13 +131,13 @@ export class AuthController {
     }
   };
 
-  public refresh = async (req: IRequest, res: Response, next: NextFunction) => {
+  public refresh = async (req: IRequest, res: Response) => {
     try {
       const user = jwt.verify(req.body.refreshToken, process.env.JWT_SECRET) as Payload;
 
       const tokens = await this.generateToken(user);
 
-      return res.status(201).send(tokens);
+      return res.status(200).send(tokens);
     } catch (error) {
       return res.status(400).send({ message: INVALID_REFRESH_TOKEN });
     }

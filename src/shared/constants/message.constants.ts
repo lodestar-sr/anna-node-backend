@@ -6,4 +6,3 @@ export const EXPIRED_JWT = 'Expired JWT';
 export const INVALID_REFRESH_TOKEN = 'Invalid refresh token';
 export const NOT_FOUND_USER = 'Cannot find user';
 export const NOT_ALLOWED_MODIFY = 'You are not allowed to modify the data';
-export const NOT_ALLOWED_DELETE = 'You are not allowed to remove the data';
